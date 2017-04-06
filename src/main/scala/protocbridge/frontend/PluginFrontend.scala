@@ -80,4 +80,26 @@ object PluginFrontend {
     if (isWindows) new WindowsPluginFrontend(pythonExe)
     else PosixPluginFrontend
   }
+
+  val scalaScript: String =
+    """#!/usr/bin/env scala
+  import java.io.{InputStream, ByteArrayOutputStream}
+
+  def inputStreamToBytes(input: InputStream): Array[Byte] = {
+    val buffer = new ByteArrayOutputStream()
+    var n = 0;
+    val data = new Array[Byte](16384)
+    while ({n = input.read(data, 0, data.length); n} != -1) {
+      buffer.write(data, 0, n)
+    }
+    buffer.toByteArray()
+  }
+
+  val socket = new java.net.Socket("localhost", args(0).toInt)
+  val out = socket.getOutputStream()
+  val in = socket.getInputStream()
+  out.write(inputStreamToBytes(System.in))
+  System.out.write(inputStreamToBytes(in))
+  """
+
 }
