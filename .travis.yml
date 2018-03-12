@@ -3,11 +3,11 @@ sudo: false
 scala:
   - 2.10.7
   - 2.11.12
-jdk: openjdk7
-matrix:
-  include:
-  - scala: 2.12.4
-    jdk: oraclejdk8
+  - 2.12.4
+jdk: oraclejdk9
+
+before_script:
+  - _JAVA_OPTIONS=
 
 cache:
   directories:

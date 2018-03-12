@@ -98,6 +98,7 @@ object PluginFrontend {
 
   def createTempFile(extension: String, content: String): Path = {
     val fileName = Files.createTempFile("protocbridge", extension)
+    fileName.toFile.setExecutable(true)
     val os = Files.newOutputStream(fileName)
     os.write(content.getBytes("UTF-8"))
     os.close()
@@ -107,8 +108,7 @@ object PluginFrontend {
   def isWindows: Boolean = sys.props("os.name").startsWith("Windows")
 
   def newInstance: PluginFrontend = {
-    if (isWindows) WindowsPluginFrontend
-    else PosixPluginFrontend
+    WindowsPluginFrontend
   }
 
   /**

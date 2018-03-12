@@ -8,7 +8,6 @@ import protocbridge.ProtocCodeGenerator
 import scala.sys.process.ProcessLogger
 
 class WindowsPluginFrontendSpec extends FlatSpec with MustMatchers {
-  if (PluginFrontend.isWindows) {
     it must "execute a program that forwards input and output to given stream" in {
       val toSend = "ping"
       val toReceive = "pong"
@@ -28,5 +27,4 @@ class WindowsPluginFrontendSpec extends FlatSpec with MustMatchers {
       actualOutput.mkString mustBe toReceive
       WindowsPluginFrontend.cleanup(state)
     }
-  }
 }
