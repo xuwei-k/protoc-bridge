@@ -2,6 +2,7 @@ import com.typesafe.tools.mima.core._
 
 inThisBuild(
   List(
+    conflictWarning := ConflictWarning("warn", Level.Warn, false),
     scalaVersion := "2.12.16",
     crossScalaVersions := Seq("2.12.18", "2.13.12"),
     scalacOptions ++= List("-release", "8"),
@@ -29,7 +30,7 @@ lazy val bridge: Project = project
       "org.scalatest" %% "scalatest" % "3.2.16" % "test",
       "org.scalacheck" %% "scalacheck" % "1.17.0" % "test",
       "org.scala-lang.modules" %% "scala-collection-compat" % "2.11.0" % "test",
-      "io.get-coursier" %% "coursier" % coursierVersion % "test"
+      "io.get-coursier" %% "coursier" % coursierVersion % "test" cross CrossVersion.for3Use2_13
     ),
     scalacOptions ++= (if (scalaVersion.value.startsWith("2.13."))
                          Seq("-Wconf:origin=.*JavaConverters.*:s")
@@ -52,7 +53,7 @@ lazy val protocCacheCoursier = project
   .settings(
     name := "protoc-cache-coursier",
     libraryDependencies ++= Seq(
-      "io.get-coursier" %% "coursier" % coursierVersion
+      "io.get-coursier" %% "coursier" % coursierVersion cross CrossVersion.for3Use2_13
     )
   )
 
